@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-let size = 40;
+let size = 20;
 
 function Square(props) {
     return (
