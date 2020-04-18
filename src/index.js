@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-let size = 20;
+let size = 6;
 
 function Square(props) {
     return (
@@ -25,6 +25,51 @@ class Board extends React.Component {
       }
       
     }
+
+    nextGeneration(){
+        const cells = JSON.parse(JSON.stringify(this.state.cells));
+        const cells_new = JSON.parse(JSON.stringify(this.state.cells));
+        for(let i=1;i<(size-1);i++){
+            for(let j=1;j<(size-1);j++){
+                let neighbours = checkNeighbours([i,j]);
+                if(cells[i][j]){
+                    if(neighbours<2 || neighbours>3){
+                        cells_new[i][j]=false;
+                    } else if(neighbours===2 || neighbours===3){
+                        cells_new[i][j]=true;
+                    }
+                } else if(neighbours===3){
+                    cells_new[i][j]=true;
+                }
+            }
+        }
+    
+        function checkNeighbours(n){
+            
+            // console.log('cell ', n[0], n[1], ':' )                      
+            let count=0;
+            let r,c;
+            for( r = -1; r<2; r++){
+                for(c = -1; c<2 ; c++){
+                    // console.log(r, c, cells[(n[0]+r)][(n[1]+c)]);
+                    if(cells[(n[0]+r)][(n[1]+c)]){
+                        count++;
+                        // console.log(count);
+                    }
+                }
+            }
+            if(cells[n[0]][n[1]]){
+                count--;
+            }
+            // console.log('count: ', count)
+            return count;        
+        }
+        // console.log(cells_new);
+        this.setState({
+            cells: cells_new
+        });
+    }
+
 
     handleClick(i){
         const cells = this.state.cells.slice();
@@ -56,16 +101,37 @@ class Board extends React.Component {
     }
 
     render() {
-      let all = [];
+      let all_rows = [];
       for (let i=0;i<size;i++){
-          all.push(this.renderRow(i))
+          all_rows.push(this.renderRow(i))
       }
-      return all;
+      return (
+          <div>
+          {all_rows}
+          <button onClick={() => this.nextGeneration()}>Test</button>
+          </div>
+      );
     }
   }
 
 
 class Game extends React.Component {
+// ------------Will come back to it after finishing animation--------------
+    // constructor(props){
+    //     super(props);
+        
+    //     let cells = [];
+    //     for(let i=0; i<size; i++){
+    //         let row = Array(size).fill(false);  
+    //         cells.push(row);
+    //     } 
+        
+    //     this.state={
+    //         history:[cells] ,
+    //     }
+
+    // }
+    
     render() {
       return (
         <div className="game">
@@ -85,3 +151,5 @@ class Game extends React.Component {
     <Game />,
     document.getElementById('root')
   );
+
+
