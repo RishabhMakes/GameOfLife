@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-let size = 20;
+let size = 40;
 
 function Square(props) {
     return (
@@ -135,11 +135,15 @@ class Board extends React.Component {
           all_rows.push(this.renderRow(i))
       }
       return (
-          <div>
+          <div className='big_board'>
+          <div className='cells'>
           {all_rows}
+          </div>
+          <div className='controls'>
           <button onClick={() => this.animate()}>Animate on/off</button>
           <button onClick={() => this.nextGeneration()}>Next</button>
           <button onClick={() => this.clear()}>Clear</button>
+          </div>
           </div>
       );
     }

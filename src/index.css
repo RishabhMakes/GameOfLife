@@ -15,6 +15,10 @@ body {
     /* margin-left: auto;
     margin-right: auto; */
   }
+
+ .square:last-child, .square:first-child, .board-row:first-of-type > .square, .board-row:last-of-type > .square{
+      border: 0px transparent;
+  }
   
   .status {
     margin-bottom: 10px;
@@ -22,18 +26,13 @@ body {
   
   .square {
     background: #fff;
-    border: 1px solid #999;
+    border: 0.1px solid #eee;
     /* border-radius: 50%; */
     float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 20px;
-    margin-right: -1px;
-    margin-top: -1px;
+    height: 14px;
     padding: 0;
     text-align: center;
-    width: 20px;
+    width: 14px;
   }
 
   [value=true]{
