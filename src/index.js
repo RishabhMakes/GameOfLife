@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-let size = 6;
+let size = 20;
 
 function Square(props) {
     return (
@@ -22,8 +22,37 @@ class Board extends React.Component {
       
       this.state={
        cells: cells,
+       animate:false,
       }
       
+    }
+
+    animate(){
+        if(this.state.animate){
+            clearInterval(this.timerID);
+            this.setState({animate: false});
+        }
+        else{
+            this.timerID = setInterval(
+                () => this.nextGeneration(),
+                500
+            );
+            this.setState({animate: true});
+        }
+      
+    }
+
+
+    clear(){
+        let cells = [];
+        for(let i=0; i<size; i++){
+            let row = Array(size).fill(false);  
+            cells.push(row);
+        }
+
+        this.setState({
+            cells: cells
+        });
     }
 
     nextGeneration(){
@@ -108,7 +137,9 @@ class Board extends React.Component {
       return (
           <div>
           {all_rows}
-          <button onClick={() => this.nextGeneration()}>Test</button>
+          <button onClick={() => this.animate()}>Animate on/off</button>
+          <button onClick={() => this.nextGeneration()}>Next</button>
+          <button onClick={() => this.clear()}>Clear</button>
           </div>
       );
     }
